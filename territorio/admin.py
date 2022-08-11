@@ -6,12 +6,15 @@ from .models import Aprendiz, Monitoria, Actividades
 
 @admin.register(Aprendiz)
 class AprendizAdmin(admin.ModelAdmin):
-    list_display = ('cedula', 'nombre', 'apellido', 'fecha_nacimiento', 'edad_fecha')
+    list_display = ('cedula', 'nombre', 'apellido', 'fecha_nacimiento', 'edad')
     search_fields = ['cedula', 'nombre', 'apellido', 'fecha_nacimiento']
 
-    def edad_fecha(self, obj):
-        ed = obj.fecha_nacimiento
-        return ed
+    def edad(self, obj):
+        from datetime import date
+        hoy = date.today()
+
+        edad = hoy.year - obj.fecha_nacimiento.year - ((hoy.month, hoy.day) < (obj.fecha_nacimiento.month, obj.fecha_nacimiento.day))
+        return edad
 
  
 @admin.register(Monitoria)
@@ -27,8 +30,11 @@ class MonitoriaAdmin(admin.ModelAdmin):
 
 
 @admin.register(Actividades)
-class ActividadesAdmin():
-    pass
+class ActividadesAdmin(admin.ModelAdmin):
+    list_display = ('monitoria', 'actividad_realizada', 'obs', 'fecha', )
+    search_fields = ['actividadRealizada']
+
+
 
 #admin.site.register(Aprendiz, AprendizAdmin)
 #admin.site.register(Monitoria)

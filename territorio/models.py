@@ -12,7 +12,6 @@ class Aprendiz(models.Model):
         return self.nombre
 
 class Monitoria(models.Model):
-
     cat = models.CharField(max_length=100)
     aprendiz = models.ForeignKey(Aprendiz, on_delete = models.DO_NOTHING)
     fecha_inicio = models.DateTimeField()
