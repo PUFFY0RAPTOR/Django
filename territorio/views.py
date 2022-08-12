@@ -1,39 +1,77 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from .models import Aprendiz, Monitoria, Actividades
+from django.urls import reverse
 
 # Create your views here.
 
-#El request es un parametreo que necesita django para manipular el peticion-respuesta (GET, POST, DELETE)
+#El request es un parametro que necesita django para manipular el peticion-respuesta (GET, POST, DELETE)
 
-def saludo(request):    
-    return HttpResponse(f"<a href='http://127.0.0.1:8000/territorio/saludo/sebasgg'>Enviar a saludo especial</a>")
+def index(request):    
+    return render(request, 'territorio/index.html')
 
-def saludoEspecial(request, dato):
-    return HttpResponse(f"Probando ando DJango... by: <strong style='color: blue;'> {dato} </strong>")
+def listarAprendiz(request):
 
-def calculadora(request, ope, num1, num2):
+    q = Aprendiz.objects.all()
+    contexto = { 'datos': q }
 
-    if ope == 1:
-        return HttpResponse(f"La suma de: <br/> {num1} + {num2} = <span style='color: red;'>{num1 + num2}</span>")
-    elif ope == 2:
-        return HttpResponse(f"La resta de: <br/> {num1} - {num2} = <span style='color: red;'>{num1 - num2}</span>")
-    elif ope == 3: 
-        return HttpResponse(f"La multiplicación de: <br/> {num1} * {num2} = <span style='color: red;'>{num1 * num2}</span>")
-    else:
-        return HttpResponse(f"La división de: <br/> {num1} / {num2} = <span style='color: red;'>{num1 / num2}</span>")
+    return render(request, 'territorio/aprendiz/listar_aprendiz.html', contexto)
 
+def aprendicesFormulario(request):
+    return render(request, 'territorio/aprendiz/crear_aprendiz.html')
 
-def inicio(request):
-    return render(request, 'territorio/index.html')    
+def aprendicesGuardar(request):
+    try:
+        q = Aprendiz(
+            cedula = request.POST["cedula"],
+            nombre = request.POST["nombre"],
+            apellido = request.POST["apellido"],
+            fecha_nacimiento = request.POST["fecha_nacimiento"],
+        )
+        q.save()
+        #return HttpResponse("Aprendiz guardado correctamente<br/><a href='../aprendices/'>Listar aprendices</a>")
+        return HttpResponseRedirect(reverse('territorio:aprendices'))
+    except Exception as e:
+        return HttpResponse("Error : " + str(e))
 
-def loginForm(request):
-    return render(request, 'territorio/login/login.html')
+def listarMonitorias(request):
 
-def login(request):
+    m = Monitoria.objects.all()
 
-    u = request.POST["usuario"]
-    c = request.POST["clave"]
+    contexto = { 'datos': m}
 
-    if u == "admin" and c == "sebas123":
-        return HttpResponse("Bienvenido!!!") 
-    return HttpResponse("Usuario o clave incorrectos...")
+    return render(request, 'territorio/monitoria/listar_monitoria.html', contexto)
+
+def monitoriaFormulario(request):
+
+    q = Aprendiz.objects.all()
+
+    #s = Monitoria.objects.get()
+
+    contexto = { 'data': q}
+
+    return render(request, 'territorio/monitoria/crear_monitoria.html', contexto)
+
+def monitoriaGuardar(request):
+    
+    f = int(request.POST["aprendiz"])
+    
+    try:
+        q = Monitoria(
+            cat = request.POST["cat"],
+            aprendiz = Aprendiz.objects.get(pk = f),
+            fecha_inicio = request.POST["fecha_inicio"],
+            fecha_final = request.POST["fecha_final"],
+        )
+        q.save()
+        return HttpResponseRedirect(reverse('territorio:monitorias'))
+
+    except Exception as e:
+        return HttpResponse("Error : " + str(e))
+
+def listarActividades(request):
+
+    a = Actividades.objects.all()
+    contexto = {'datos': a}
+
+    return render(request, 'territorio/actividades/listar_actividades.html', contexto)

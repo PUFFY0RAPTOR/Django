@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario aprendiz</title>
+</head>
+<body>
+    
+    <h1>Formulario de registro de aprendiz</h1>
+    <fieldset>
+        <legend> Formulario de registro </legend>
+        <form action="{% url 'territorio:guardar-aprend' %}" method="post">
+
+            {% csrf_token %}
+
+            <br/><label for="cedula">Cédula: </label>
+            <input type="number" name="cedula" placeholder="Cédula"><br/><br/>
+
+            <label for="nombre">Nombre: </label>
+            <input type="text" name="nombre" placeholder="Nombre"><br/><br/>
+
+            <label for="apellido">Apellido: </label>
+            <input type="text" name="apellido" placeholder="Apellido"><br/><br/>
+
+            <label for="fecha_nacimiento">Fecha de nacimiento: </label>
+            <input type="date" name="fecha_nacimiento" placeholder="Fecha de nacimiento"><br/><br/>
+
+            <input type="submit" value="Guardar">
+        </form>
+    </fieldset>
+
+</body>
+</html>

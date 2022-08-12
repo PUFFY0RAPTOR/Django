@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividades</title>
+</head>
+<body>
+    
+    <h1>Actividades</h1>
+
+    <a href="#">Nuevo aprendiz</a><br>
+
+    {% if datos %}
+
+    <table class="container table table-striped table-bordered border-success">
+        <thead>
+            <tr>
+                <th>Monitoria</th>
+                <th>Actividad realizada</th>
+                <th>Apellido</th>
+                <th>Fecha de nacimiento</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in datos %}
+            <tr>
+                <td>{{ r.cedula}}</td>
+                <td>{{ r.nombre}}</td>
+                <td>{{ r.apellido}}</td>
+                <td>{{r.fecha_nacimiento}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+    <h1> No hay datos</h1>
+    {% endif %}
+
+</body>
+</html>

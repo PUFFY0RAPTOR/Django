@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Monitorias</title>
+</head>
+<body>  
+    
+    <!--{% if data %}
+        <h6>{{data}}</h6>
+    {% endif %}-->
+
+    <h1>Formulario de registro de monitorias</h1>
+    <fieldset>
+        <legend> Formulario de registro </legend>
+        <form action="{% url 'territorio:guardar-monit' %}" method="post">
+
+            {% csrf_token %}
+
+            <br/><label for="cat">Categoria: </label>
+            <input type="text" name="cat" placeholder="Categoria"><br/><br/>
+
+            <label for="aprendiz">Nombre aprendiz: </label>
+            <!--<input type="number" name="aprendiz" placeholder="aprendiz">-->
+            {% if data %}
+       
+            <select name="aprendiz">
+                <option value="" selected>Seleccione aprendiz</option>
+                {% for i in data %}
+                <option>{{i.cedula}}</option>
+                {% endfor %}    
+            </select>
+ 
+            {% endif %}
+
+            <br/><br/><label for="fecha_inicio">Fecha inicio: </label>
+            <input type="datetime-local" name="fecha_inicio" placeholder="Fecha inicio"><br/><br/>
+
+            <label for="fecha_final">Fecha final: </label>
+            <input type="datetime-local" name="fecha_final" placeholder="Fecha final"><br/><br/>
+
+            <input type="submit" value="Guardar">
+        </form>
+    </fieldset>
+
+</body>
+</html>

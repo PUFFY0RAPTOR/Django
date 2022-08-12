@@ -1,12 +1,14 @@
 from django.urls import path
-from . import views                 #El punto significa que, desde dentro de la carpeta
+from . import views                 
 
 app_name = "territorio"
 urlpatterns = [
-    path('', views.inicio, name="inicio"),
-    path('saludar/', views.saludo, name="saludar"),
-    path('saludo/<str:dato>', views.saludoEspecial, name="saludo"),
-    path('calcula/<int:ope>/<int:num1>/<int:num2>', views.calculadora, name="calcula"),
-    path('loginForm/', views.loginForm, name="login-form"),
-    path('login/', views.login, name="login"),
+    path('', views.index, name="index"),
+    path('aprendices/', views.listarAprendiz, name="aprendices"),
+    path('aprendicesAdd/', views.aprendicesFormulario, name="form-aprendiz"),
+    path('aprendGuardar/', views.aprendicesGuardar, name="guardar-aprend"),
+    path('monitoria/', views.listarMonitorias, name="monitorias"),
+    path('monitoriaAdd/', views.monitoriaFormulario, name="form-monitoria"),
+    path('monitGuardar/', views.monitoriaGuardar, name="guardar-monit"),
+    path('actividades/', views.listarActividades, name="actividades"),
 ]

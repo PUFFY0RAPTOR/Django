@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitorias</title>
+</head>
+<body>
+
+    <h1>Monitorias</h1>
+    <!---->
+    <a href="{% url 'territorio:form-monitoria' %}">Crear monitoria</a><br/><br/>
+    {% if datos %}
+        
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Categoria</th>
+                    <th>Aprendiz</th>
+                    <th>Apellido</th>
+                    <th>Fecha inicio</th>
+                    <th>Fecha final</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in datos %}
+                    <tr>
+                        <td>{{i.id}}</td>
+                        <td>{{i.cat}}</td>
+                        <td>{{i.aprendiz}}</td>
+                        <td>{{i.aprendiz.apellido}}</td>
+                        <td>{{i.fecha_inicio}}</td>
+                        <td>{{i.fecha_final}}</td>
+                    </tr>    
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+    
+</body>
+</html>
